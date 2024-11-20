@@ -24,8 +24,8 @@
 
     <ImageView
         android:id="@+id/imageViewLogo"
-        android:layout_width="455dp"
-        android:layout_height="104dp"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
         android:layout_marginTop="12dp"
         android:contentDescription="Logo de Magic: The Gathering"
         android:scaleType="fitCenter"
@@ -35,14 +35,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/switchDayNight" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageViewLogo" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Eliminar"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

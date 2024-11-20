@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -17,6 +19,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<Carta> cartas;
     private Context context;
     private boolean isNightMode; // Nuevo atributo para modo noche
+    private List<Integer> selectedPositions = new ArrayList<>(); // Posiciones seleccionadas
 
     public RecyclerViewAdapter(List<Carta> cartas, Context context, boolean isNightMode) {
         this.cartas = cartas;
@@ -61,7 +64,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.textViewCardText.setVisibility(View.GONE);
             holder.arrowButton.setImageResource(R.drawable.arrow_down);
         }
-
+        // Cambiar el fondo si está seleccionado para eliminar
+        if (selectedPositions.contains(position)) {
+            holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.md_theme_primaryFixedDim_highContrast));
+        } else {
+            holder.itemView.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+        }
+        // Manejar selección al hacer clic
+        holder.itemView.setOnClickListener(v -> {
+            if (selectedPositions.contains(position)) {
+                selectedPositions.remove((Integer) position); // Quitar selección
+            } else {
+                selectedPositions.add(position); // Agregar selección
+            }
+            notifyItemChanged(position); // Actualizar el elemento clickeado
+        });
         // Manejar el clic en el botón de la flecha
         holder.arrowButton.setOnClickListener(v -> {
             carta.setExpanded(!carta.isExpanded()); // Cambiar el estado de expansión
@@ -85,5 +102,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             imageViewImagen = itemView.findViewById(R.id.imageViewImagen);
             arrowButton = itemView.findViewById(R.id.arrowButton);
         }
+    }
+    // Método para eliminar las cartas seleccionadas
+    public void removeSelectedCards() {
+        Collections.sort(selectedPositions, Collections.reverseOrder()); // Ordenar posiciones en reversa
+        for (int position : selectedPositions) {
+            cartas.remove(position); // Eliminar por posición
+        }
+        selectedPositions.clear(); // Limpiar las selecciones
+        notifyDataSetChanged(); // Refrescar el RecyclerView
     }
 }

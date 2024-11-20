@@ -1,6 +1,7 @@
 package com.example.trabajomagic;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -31,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
         cartas.add(new Carta("Shivan Dragon", "Flying, Firebreathing", R.drawable.shivan_dragon));
         cartas.add(new Carta("Black Lotus", "Sacrifice Black Lotus: Add three mana of any one color.", R.drawable.black_lotus));
         cartas.add(new Carta("Llanowar Elves", "Tap: Add one green mana.", R.drawable.llanowar_elves));
-
         cartas.add(new Carta("Lightning Bolt", "Deal 3 damage to any target.", R.drawable.lightning_bolt));
         cartas.add(new Carta("Counterspell", "Counter target spell.", R.drawable.counterspell));
         cartas.add(new Carta("Tarmogoyf", "Tarmogoyf's power is equal to the number of card types in all graveyards.", R.drawable.tarmogoyf));
         cartas.add(new Carta("Serra Angel", "Flying, Vigilance", R.drawable.serra_angel));
+
         // Adaptador
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(cartas, this, isNightMode);
         recyclerView.setAdapter(adapter);
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         switchDayNight.setOnCheckedChangeListener((buttonView, isChecked) -> {
             isNightMode = isChecked;
 
-            // Cambiar fondo del layout principal (ConstraintLayout)
+            // Cambiar fondo del layout
             if (isNightMode) {
                 findViewById(R.id.main).setBackgroundResource(R.drawable.background_magic_night);
             } else {
@@ -53,5 +54,8 @@ public class MainActivity extends AppCompatActivity {
             }
             adapter.setNightMode(isNightMode); // Informar al adaptador
         });
+        // Botón para eliminar cartas seleccionadas
+        Button deleteButton = findViewById(R.id.button);
+        deleteButton.setOnClickListener(v -> adapter.removeSelectedCards());
     }
 }
