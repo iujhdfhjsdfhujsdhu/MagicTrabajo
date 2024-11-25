@@ -18,7 +18,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private List<Carta> cartas;
     private Context context;
-    private boolean isNightMode; // Nuevo atributo para modo noche
+    private boolean isNightMode; // Atributo para modo noche
     private List<Integer> selectedPositions = new ArrayList<>(); // Posiciones seleccionadas
 
     public RecyclerViewAdapter(List<Carta> cartas, Context context, boolean isNightMode) {

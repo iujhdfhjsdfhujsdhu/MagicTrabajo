@@ -4,7 +4,7 @@ public class Carta {
     private String nombre;
     private String cardText;
     private int imagenResId; // Imagen de la carta
-    private boolean isExpanded; // Si la carta está expandida o no
+    private boolean isExpanded; // Si el texto está expandido o no
 
     public Carta(String nombre, String cardText, int imagenResId) {
         this.nombre = nombre;
