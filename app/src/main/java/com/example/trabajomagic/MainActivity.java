@@ -68,8 +68,11 @@ public class MainActivity extends AppCompatActivity {
 
             // Toast de borrar
             if (selectedCount > 0) {
+                // Usar string "message" para mostrar el número de cartas eliminadas
+                String message = getString(R.string.toast_deleted_cards, selectedCount);
+                // Crear un TextView para el Toast
                 TextView textoDelToast = new TextView(MainActivity.this);
-                textoDelToast.setText(selectedCount + " cartas eliminadas.");
+                textoDelToast.setText(message);
                 textoDelToast.setTextSize(18); // Cambiar tamaño del texto
                 textoDelToast.setPadding(16, 16, 16, 16);
                 textoDelToast.setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.show();
             } else {
-                Toast.makeText(this, "No hay cartas seleccionadas.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_no_cards_selected), Toast.LENGTH_SHORT).show();
             }
         });
     }

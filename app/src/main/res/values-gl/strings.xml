@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TraballoMagic</string>
+    <string name="button">Eliminar</string>
+    <string name="toast_deleted_cards">"%1$d cartas eliminadas."</string>
+    <string name="toast_no_cards_selected">Ningunha carta seleccionada.</string>
+</resources>
