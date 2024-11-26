@@ -83,6 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.arrowButton.setOnClickListener(v -> {
             carta.setExpanded(!carta.isExpanded()); // Cambiar el estado de expansión
             notifyItemChanged(position); // Actualizar solo el elemento clickeado
+
         });
     }
 
@@ -111,5 +112,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
         selectedPositions.clear(); // Limpiar las selecciones
         notifyDataSetChanged(); // Refrescar el RecyclerView
+    }
+    public List<Integer> getSelectedPositions() {
+        return new ArrayList<>(selectedPositions);
     }
 }

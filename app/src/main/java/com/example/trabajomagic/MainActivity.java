@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,9 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Lista de cartas
         List<Carta> cartas = new ArrayList<>();
-        cartas.add(new Carta("Ulamog, el hambre que no cesa", "Indestructible. Exilia dos permanentes al lanzar.", R.drawable.ulamog));
-        cartas.add(new Carta("Bosque", "Permite agregar un maná verde. Subtipo: Bosque.", R.drawable.bosque));
-        cartas.add(new Carta("Acto Blasfemo", "Hace 13 puntos de daño a cada criatura.", R.drawable.acto_blasfemo));
+
+        cartas.add(new Carta("Ulamog, the Ceaseless Hunger", "Indestructible. Exile two permanents when cast.", R.drawable.ulamog));
+        cartas.add(new Carta("Forest", "Allows adding one green mana. Subtype: Forest.", R.drawable.bosque));
+        cartas.add(new Carta("Blasphemous Act", "Deals 13 damage to each creature.", R.drawable.acto_blasfemo));
         cartas.add(new Carta("Shivan Dragon", "Flying, Firebreathing", R.drawable.shivan_dragon));
         cartas.add(new Carta("Black Lotus", "Sacrifice Black Lotus: Add three mana of any one color.", R.drawable.black_lotus));
         cartas.add(new Carta("Llanowar Elves", "Tap: Add one green mana.", R.drawable.llanowar_elves));
@@ -53,9 +56,32 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.main).setBackgroundResource(R.drawable.background_magic_day);
             }
             adapter.setNightMode(isNightMode); // Informar al adaptador
+
         });
         // Botón para eliminar cartas seleccionadas
         Button deleteButton = findViewById(R.id.button);
-        deleteButton.setOnClickListener(v -> adapter.removeSelectedCards());
+        deleteButton.setOnClickListener(v -> {
+            int selectedCount = adapter.getSelectedPositions().size();
+
+            // Eliminar cartas seleccionadas
+            adapter.removeSelectedCards();
+
+            // Toast de borrar
+            if (selectedCount > 0) {
+                TextView textoDelToast = new TextView(MainActivity.this);
+                textoDelToast.setText(selectedCount + " cartas eliminadas.");
+                textoDelToast.setTextSize(18); // Cambiar tamaño del texto
+                textoDelToast.setPadding(16, 16, 16, 16);
+                textoDelToast.setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
+                textoDelToast.setTextColor(getResources().getColor(android.R.color.white));
+
+                Toast toast = new Toast(MainActivity.this);
+                toast.setView(textoDelToast);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                Toast.makeText(this, "No hay cartas seleccionadas.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
