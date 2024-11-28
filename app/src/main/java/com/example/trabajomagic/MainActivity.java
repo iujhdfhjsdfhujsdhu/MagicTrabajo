@@ -1,8 +1,9 @@
 package com.example.trabajomagic;
 
+import static android.R.color.holo_red_light;
+
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,16 +74,17 @@ public class MainActivity extends AppCompatActivity {
                 // Crear un TextView para el Toast
                 TextView textoDelToast = new TextView(MainActivity.this);
                 textoDelToast.setText(message);
-                textoDelToast.setTextSize(18); // Cambiar tamaño del texto
-                textoDelToast.setPadding(16, 16, 16, 16);
-                textoDelToast.setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
-                textoDelToast.setTextColor(getResources().getColor(android.R.color.white));
+                textoDelToast.setTextSize(18); // Tamaño del texto
+                textoDelToast.setPadding(16, 16, 16, 16); // Padding
+                textoDelToast.setBackgroundColor(getResources().getColor(holo_red_light)); // Color de fondo
+                textoDelToast.setTextColor(getResources().getColor(android.R.color.white)); // Color de la letra
 
                 Toast toast = new Toast(MainActivity.this);
                 toast.setView(textoDelToast);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.show();
             } else {
+                // Mensaje de No cartas seleccionadas
                 Toast.makeText(this, getString(R.string.toast_no_cards_selected), Toast.LENGTH_SHORT).show();
             }
         });

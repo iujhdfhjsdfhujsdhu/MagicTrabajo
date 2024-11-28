@@ -1,8 +1,8 @@
 package com.example.trabajomagic;
 
 public class Carta {
-    private String nombre;
-    private String cardText;
+    private String nombre; // Nombre de la carta
+    private String cardText; // Descripción de la carta
     private int imagenResId; // Imagen de la carta
     private boolean isExpanded; // Si el texto está expandido o no
 

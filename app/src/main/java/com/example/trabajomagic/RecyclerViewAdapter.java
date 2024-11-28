@@ -1,6 +1,7 @@
 package com.example.trabajomagic;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -25,6 +27,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.cartas = cartas;
         this.context = context;
         this.isNightMode = isNightMode; // Inicializar el modo noche
+        if (cartas == null || cartas.isEmpty()){
+            Log.i("Warning", context.getString(R.string.la_lista_est_vac_a_o_es_null));
+        }
     }
 
     // Getter y Setter para actualizar el modo
@@ -42,19 +47,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         Carta carta = cartas.get(position);
         holder.textViewNombre.setText(carta.getNombre());
         holder.textViewCardText.setText(carta.getCardText());
         holder.imageViewImagen.setImageResource(carta.getImagenResId());
 
+
         // Cambiar colores basados en el modo noche/día
         if (isNightMode) {
-            holder.textViewNombre.setTextColor(context.getResources().getColor(android.R.color.white));
-            holder.textViewCardText.setTextColor(context.getResources().getColor(android.R.color.white));
+            holder.textViewNombre.setTextColor(ContextCompat.getColor(context, R.color.md_theme_surfaceDim));
+            holder.textViewCardText.setTextColor(ContextCompat.getColor(context, R.color.md_theme_inverseOnSurface));
         } else {
-            holder.textViewNombre.setTextColor(context.getResources().getColor(android.R.color.black));
-            holder.textViewCardText.setTextColor(context.getResources().getColor(android.R.color.black));
+            holder.textViewNombre.setTextColor(ContextCompat.getColor(context, R.color.md_theme_inverseSurface));
+            holder.textViewCardText.setTextColor(ContextCompat.getColor(context, R.color. md_theme_onSurface));
         }
+
 
         // Mostrar u ocultar el texto dependiendo del estado de 'isExpanded'
         if (carta.isExpanded()) {
@@ -66,11 +74,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
         // Cambiar el fondo si está seleccionado para eliminar
         if (selectedPositions.contains(position)) {
-            holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.md_theme_primaryFixedDim_highContrast));
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.md_theme_primaryFixedDim_highContrast));
         } else {
-            holder.itemView.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
+
         }
-        // Manejar selección al hacer clic
+        // Seleccionar carta al pulsar
         holder.itemView.setOnClickListener(v -> {
             if (selectedPositions.contains(position)) {
                 selectedPositions.remove((Integer) position); // Quitar selección
@@ -106,6 +115,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
     // Método para eliminar las cartas seleccionadas
     public void removeSelectedCards() {
+        Log.i("Warning", context.getString(R.string.se_ha_pulsado_el_bot_n_para_borrar_cartas));
         Collections.sort(selectedPositions, Collections.reverseOrder()); // Ordenar posiciones en reversa
         for (int position : selectedPositions) {
             cartas.remove(position); // Eliminar por posición
@@ -113,6 +123,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         selectedPositions.clear(); // Limpiar las selecciones
         notifyDataSetChanged(); // Refrescar el RecyclerView
     }
+    // Método para optener las posiciones seleccionadas
     public List<Integer> getSelectedPositions() {
         return new ArrayList<>(selectedPositions);
     }

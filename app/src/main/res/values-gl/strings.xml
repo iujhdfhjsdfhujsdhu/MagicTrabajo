@@ -4,4 +4,6 @@
     <string name="button">Eliminar</string>
     <string name="toast_deleted_cards">"%1$d cartas eliminadas."</string>
     <string name="toast_no_cards_selected">Ningunha carta seleccionada.</string>
+    <string name="se_ha_pulsado_el_bot_n_para_borrar_cartas">Se ha pulsado o botón para borrar cartas</string>
+    <string name="la_lista_est_vac_a_o_es_null">A lista atópase valeira ou é null</string>
 </resources>
