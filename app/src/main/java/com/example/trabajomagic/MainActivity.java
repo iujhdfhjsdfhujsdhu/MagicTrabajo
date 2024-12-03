@@ -1,36 +1,33 @@
 package com.example.trabajomagic;
 
 import static android.R.color.holo_red_light;
-import com.example.trabajomagic.R;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
+import android.content.res.Configuration;
 
 public class MainActivity extends AppCompatActivity {
 
     private boolean isNightMode = false; // Estado inicial del modo
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Inicializa el RecyclerView
+        recyclerView = findViewById(R.id.recyclerView);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         // Adaptador
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(cartas, this, isNightMode);
         recyclerView.setAdapter(adapter);
+
+        // Cambiar la orientación del RecyclerView dependiendo de la orientación de la pantalla
+        updateRecyclerViewOrientation(getResources().getConfiguration().orientation);
 
         // Switch para alternar modos
         Switch switchDayNight = findViewById(R.id.switchDayNight);
@@ -123,12 +123,21 @@ public class MainActivity extends AppCompatActivity {
                 // Acción al volver a seleccionar una pestaña
             }
         });
-
-
-
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Cambiar la orientación del RecyclerView cuando cambie la orientación del dispositivo
+        updateRecyclerViewOrientation(newConfig.orientation);
     }
 
-
-
-
+    private void updateRecyclerViewOrientation(int orientation) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Si la pantalla está en modo horizontal (landscape), usar orientación horizontal
+            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        } else {
+            // Si la pantalla está en modo vertical (portrait), usar orientación vertical
+            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        }
+    }
 }
