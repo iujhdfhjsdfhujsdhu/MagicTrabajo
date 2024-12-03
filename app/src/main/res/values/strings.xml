@@ -5,4 +5,9 @@
     <string name="toast_no_cards_selected">Ninguna carta seleccionada.</string>
     <string name="se_ha_pulsado_el_bot_n_para_borrar_cartas">Se ha pulsado el botón para borrar cartas</string>
     <string name="la_lista_est_vac_a_o_es_null">La lista está vacía o es null</string>
+    <string name="principal">Principal</string>
+    <string name="pr_ximamente">Próximamente</string>
+    <string name="descargar">Descargar</string>
+    <string name="compartir">Compartir</string>
+    <string name="copiar_descripci_n">Copiar Descripción</string>
 </resources>

@@ -3,14 +3,19 @@ package com.example.trabajomagic;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,6 +99,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             notifyItemChanged(position); // Actualizar solo el elemento clickeado
 
         });
+        // Manejar el clic en el botón del menú contextual
+        holder.menudesplegable.setOnClickListener(v -> {
+            showpopup(v, position); // Pasar la posición para identificar la carta
+        });
+
+
+
     }
 
     @Override
@@ -103,7 +115,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewNombre, textViewCardText;
-        ImageView imageViewImagen, arrowButton;
+        ImageView imageViewImagen, arrowButton, menudesplegable;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -111,6 +123,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             textViewCardText = itemView.findViewById(R.id.textViewCardText);
             imageViewImagen = itemView.findViewById(R.id.imageViewImagen);
             arrowButton = itemView.findViewById(R.id.arrowButton);
+            menudesplegable = itemView.findViewById(R.id.menudesplegable);
         }
     }
     // Método para eliminar las cartas seleccionadas
@@ -127,4 +140,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public List<Integer> getSelectedPositions() {
         return new ArrayList<>(selectedPositions);
     }
+
+    public void showpopup(View v, int position) {
+        PopupMenu popupMenu = new PopupMenu(context, v);  // Usa 'context' aquí
+        popupMenu.getMenuInflater().inflate(R.menu.popupmenu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.download) {
+                    // Acción que ocurre cuando se selecciona "Descargar"
+                    String cartaNombre = cartas.get(position).getNombre();
+
+                    // Crear y mostrar un Snackbar
+                    Snackbar.make(v, "Descargar carta: " + cartaNombre, Snackbar.LENGTH_SHORT)
+                            .setAction("Ver", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // Acción adicional si el usuario pulsa en "Ver"
+                                    Toast.makeText(context, "Ver detalles de: " + cartaNombre, Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .show();
+                }
+                return true;
+            }
+        });
+        popupMenu.show(); // Mostrar el menú
+    }
+
+
+
+
 }

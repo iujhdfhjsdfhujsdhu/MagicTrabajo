@@ -1,9 +1,14 @@
 package com.example.trabajomagic;
 
 import static android.R.color.holo_red_light;
-
+import com.example.trabajomagic.R;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,6 +16,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,5 +96,39 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.toast_no_cards_selected), Toast.LENGTH_SHORT).show();
             }
         });
+        TabLayout tabLayout = findViewById(R.id.TabLayout);
+
+
+// Listener de selección de pestañas
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                // Acción al seleccionar una pestaña
+                Log.d("TabLayout", "Tab seleccionada: " + tab.getText());
+
+                // Mostrar Snackbar al seleccionar una pestaña
+                String message = "Tab seleccionada: " + tab.getText();
+                Snackbar snackbar = Snackbar.make(tabLayout, message, Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Acción al deseleccionar una pestaña
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Acción al volver a seleccionar una pestaña
+            }
+        });
+
+
+
     }
+
+
+
+
 }
