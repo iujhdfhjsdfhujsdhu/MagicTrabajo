@@ -1,9 +1,11 @@
 package com.example.trabajomagic;
 
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +19,13 @@ public class CartaListFragment extends Fragment {
     private RecyclerViewAdapter adapter;
 
     public CartaListFragment() {
-        // Requiere un constructor vacío
+        // Constructor vacío requerido
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflar el layout para este fragment
+        // Inflar el layout para este fragmento
         View rootView = inflater.inflate(R.layout.fragmentcards, container, false);
 
         // Inicializar RecyclerView
@@ -43,18 +45,17 @@ public class CartaListFragment extends Fragment {
         cartas.add(new Carta("Tarmogoyf", "Tarmogoyf's power is equal to the number of card types in all graveyards.", R.drawable.tarmogoyf));
         cartas.add(new Carta("Serra Angel", "Flying, Vigilance", R.drawable.serra_angel));
 
-        // Adaptador para RecyclerView
-        adapter = new RecyclerViewAdapter(cartas, getContext(), false); // Guardar el adaptador en una variable
+        // Configurar el adaptador
+        adapter = new RecyclerViewAdapter(cartas, getContext(), false);
         recyclerView.setAdapter(adapter);
 
         return rootView;
     }
 
-    // Método público para obtener el adaptador
-    public RecyclerViewAdapter getAdapter() {
-        return adapter;
-    }
-
+    // Método para actualizar el modo noche
     public void updateNightMode(boolean isNightMode) {
+        if (adapter != null) {
+            adapter.setNightMode(isNightMode);
+        }
     }
 }
